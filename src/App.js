@@ -65,9 +65,9 @@ const StatistikKomponente = ({ statistik }) => {
     <div className="statistik">
       <h2>Statistik</h2>
       <ul>
-        {statistik.map((item, index) => (
+        {statistik.slice(0).reverse().map((item, index) => (
           <li key={index}>
-            Aufgabe {index + 1}: {item.num1} + {item.num2} = {item.correctResult} (Eingabe: {item.userResult}) 
+            Aufgabe {statistik.length - index}: {item.num1} + {item.num2} = {item.correctResult} (Eingabe: {item.userResult}) 
             {item.correctResult === item.userResult ? (
               <span style={{ color: 'green' }}> Richtig</span>
             ) : (
@@ -138,17 +138,20 @@ const App = () => {
             num2={aufgaben[aktuelleAufgabe].num2}
             onAnswerSubmit={handleAnswerSubmit}
           />
+          {letzteAufgabe && (
+            <>
+              {letzteAufgabe.correctResult !== letzteAufgabe.userResult ? (
+                <div className="fehler-meldung">
+                  <p>Falsches Ergebnis! {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}, Ihre Eingabe: {letzteAufgabe.userResult}</p>
+                </div>
+              ) : (
+                <div className="richtig-meldung">
+                  <p>Richtige Antwort: {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}</p>
+                </div>
+              )}
+            </>
+          )}
           <StatistikKomponente statistik={statistik} />
-          {letzteAufgabe && letzteAufgabe.correctResult !== letzteAufgabe.userResult && (
-            <div className="fehler-meldung">
-              <p>Falsches Ergebnis! {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}, Ihre Eingabe: {letzteAufgabe.userResult}</p>
-            </div>
-          )}
-          {letzteAufgabe && letzteAufgabe.correctResult === letzteAufgabe.userResult && (
-            <div className="richtig-meldung">
-              <p>Richtige Antwort: {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}</p>
-            </div>
-          )}
         </>
       )}
     </div>

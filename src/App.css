@@ -41,8 +41,8 @@
 }
 
 .zahl-feld {
-  font-size: 16px;
-  padding: 10px;
+  font-size: 24px;
+  padding: 30px;
   width: 100%;
 }
 
@@ -79,4 +79,8 @@
 .statistik ul {
   list-style-type: none;
   padding: 0;
+}
+
+.statistik ul li {
+  margin-bottom: 10px;
 }
