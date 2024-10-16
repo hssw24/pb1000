@@ -1,25 +1,143 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+// AufgabeKomponente für jede Aufgabe
+const AufgabeKomponente = ({ num1, num2, onAnswerSubmit }) => {
+  const [eingabe, setEingabe] = useState({ tausender: 0, hunderter: 0, zehner: 0, einer: 0 });
+
+  const handleChange = (event, stelle) => {
+    setEingabe({ ...eingabe, [stelle]: Number(event.target.value) });
+  };
+
+  const handleSubmit = () => {
+    const result = 
+      eingabe.tausender * 1000 + eingabe.hunderter * 100 + eingabe.zehner * 10 + eingabe.einer;
+    onAnswerSubmit(result);
+  };
+
+  const options = Array.from({ length: 10 }, (_, i) => <option key={i} value={i}>{i}</option>);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h2>{num1} + {num2}</h2>
+      <label>Tausender:
+        <select value={eingabe.tausender} onChange={(e) => handleChange(e, 'tausender')}>
+          {options}
+        </select>
+      </label>
+      <label>Hunderter:
+        <select value={eingabe.hunderter} onChange={(e) => handleChange(e, 'hunderter')}>
+          {options}
+        </select>
+      </label>
+      <label>Zehner:
+        <select value={eingabe.zehner} onChange={(e) => handleChange(e, 'zehner')}>
+          {options}
+        </select>
+      </label>
+      <label>Einer:
+        <select value={eingabe.einer} onChange={(e) => handleChange(e, 'einer')}>
+          {options}
+        </select>
+      </label>
+      <button onClick={handleSubmit}>Überprüfen</button>
     </div>
   );
-}
+};
+
+// StatistikKomponente zur Anzeige der Ergebnisse
+const StatistikKomponente = ({ statistik }) => {
+  return (
+    <div>
+      <h2>Statistik</h2>
+      <ul>
+        {statistik.map((item, index) => (
+          <li key={index}>
+            Aufgabe {index + 1}: {item.num1} + {item.num2} = {item.correctResult} (Eingabe: {item.userResult}) 
+            {item.correctResult === item.userResult ? (
+              <span style={{ color: 'green' }}> Richtig</span>
+            ) : (
+              <span style={{ color: 'red' }}> Falsch</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+// Haupt-App-Komponente
+const App = () => {
+  const [aufgaben, setAufgaben] = useState([]);
+  const [aktuelleAufgabe, setAktuelleAufgabe] = useState(0);
+  const [statistik, setStatistik] = useState([]);
+  const [letzteAufgabe, setLetzteAufgabe] = useState(null);
+
+  // Funktion zur Generierung einer neuen Aufgabe
+  const generiereNeueAufgabe = () => {
+    const num1 = Math.floor(Math.random() * 900) + 100; // Zahl zwischen 100 und 999
+    const num2 = Math.floor(Math.random() * 900) + 100; // Zahl zwischen 100 und 999
+    return { num1, num2 };
+  };
+
+  // Funktion zum Starten einer neuen Runde mit 10 Aufgaben
+  const starteNeueRunde = () => {
+    const neueAufgaben = Array.from({ length: 10 }, () => generiereNeueAufgabe());
+    setAufgaben(neueAufgaben);
+    setAktuelleAufgabe(0);
+    setStatistik([]);
+    setLetzteAufgabe(null);
+  };
+
+  // Funktion zur Überprüfung der Antwort
+  const handleAnswerSubmit = (userResult) => {
+    const currentTask = aufgaben[aktuelleAufgabe];
+    const correctResult = currentTask.num1 + currentTask.num2;
+    
+    const resultEntry = {
+      num1: currentTask.num1,
+      num2: currentTask.num2,
+      correctResult,
+      userResult,
+    };
+
+    setStatistik([...statistik, resultEntry]);
+    setLetzteAufgabe(resultEntry);
+
+    // Nächste Aufgabe oder Runde beenden
+    if (aktuelleAufgabe < 9) {
+      setAktuelleAufgabe(aktuelleAufgabe + 1);
+    } else {
+      alert("Runde beendet!");
+    }
+  };
+
+  return (
+    <div>
+      <h1>Grundschul-App: Addition</h1>
+      {aufgaben.length === 0 ? (
+        <button onClick={starteNeueRunde}>Neue Runde starten</button>
+      ) : (
+        <>
+          <AufgabeKomponente
+            num1={aufgaben[aktuelleAufgabe].num1}
+            num2={aufgaben[aktuelleAufgabe].num2}
+            onAnswerSubmit={handleAnswerSubmit}
+          />
+          <StatistikKomponente statistik={statistik} />
+          {letzteAufgabe && letzteAufgabe.correctResult !== letzteAufgabe.userResult && (
+            <div style={{ color: 'red' }}>
+              <p>Falsches Ergebnis! {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}, Ihre Eingabe: {letzteAufgabe.userResult}</p>
+            </div>
+          )}
+          {letzteAufgabe && letzteAufgabe.correctResult === letzteAufgabe.userResult && (
+            <div style={{ color: 'green' }}>
+              <p>Richtige Antwort: {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}</p>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
 
 export default App;
