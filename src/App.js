@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css'; // Import der CSS-Datei für das responsive Design
 
 // AufgabeKomponente für jede Aufgabe
 const AufgabeKomponente = ({ num1, num2, onAnswerSubmit }) => {
@@ -17,29 +18,31 @@ const AufgabeKomponente = ({ num1, num2, onAnswerSubmit }) => {
   const options = Array.from({ length: 10 }, (_, i) => <option key={i} value={i}>{i}</option>);
 
   return (
-    <div>
+    <div className="aufgabe">
       <h2>{num1} + {num2}</h2>
-      <label>Tausender:
-        <select value={eingabe.tausender} onChange={(e) => handleChange(e, 'tausender')}>
-          {options}
-        </select>
-      </label>
-      <label>Hunderter:
-        <select value={eingabe.hunderter} onChange={(e) => handleChange(e, 'hunderter')}>
-          {options}
-        </select>
-      </label>
-      <label>Zehner:
-        <select value={eingabe.zehner} onChange={(e) => handleChange(e, 'zehner')}>
-          {options}
-        </select>
-      </label>
-      <label>Einer:
-        <select value={eingabe.einer} onChange={(e) => handleChange(e, 'einer')}>
-          {options}
-        </select>
-      </label>
-      <button onClick={handleSubmit}>Überprüfen</button>
+      <div className="eingaben-container">
+        <label>Tausender:
+          <select value={eingabe.tausender} onChange={(e) => handleChange(e, 'tausender')} className="zahl-feld">
+            {options}
+          </select>
+        </label>
+        <label>Hunderter:
+          <select value={eingabe.hunderter} onChange={(e) => handleChange(e, 'hunderter')} className="zahl-feld">
+            {options}
+          </select>
+        </label>
+        <label>Zehner:
+          <select value={eingabe.zehner} onChange={(e) => handleChange(e, 'zehner')} className="zahl-feld">
+            {options}
+          </select>
+        </label>
+        <label>Einer:
+          <select value={eingabe.einer} onChange={(e) => handleChange(e, 'einer')} className="zahl-feld">
+            {options}
+          </select>
+        </label>
+      </div>
+      <button onClick={handleSubmit} className="submit-button">Überprüfen</button>
     </div>
   );
 };
@@ -47,7 +50,7 @@ const AufgabeKomponente = ({ num1, num2, onAnswerSubmit }) => {
 // StatistikKomponente zur Anzeige der Ergebnisse
 const StatistikKomponente = ({ statistik }) => {
   return (
-    <div>
+    <div className="statistik">
       <h2>Statistik</h2>
       <ul>
         {statistik.map((item, index) => (
@@ -112,10 +115,10 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Grundschul-App: Addition</h1>
       {aufgaben.length === 0 ? (
-        <button onClick={starteNeueRunde}>Neue Runde starten</button>
+        <button onClick={starteNeueRunde} className="start-button">Neue Runde starten</button>
       ) : (
         <>
           <AufgabeKomponente
@@ -125,12 +128,12 @@ const App = () => {
           />
           <StatistikKomponente statistik={statistik} />
           {letzteAufgabe && letzteAufgabe.correctResult !== letzteAufgabe.userResult && (
-            <div style={{ color: 'red' }}>
+            <div className="fehler-meldung">
               <p>Falsches Ergebnis! {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}, Ihre Eingabe: {letzteAufgabe.userResult}</p>
             </div>
           )}
           {letzteAufgabe && letzteAufgabe.correctResult === letzteAufgabe.userResult && (
-            <div style={{ color: 'green' }}>
+            <div className="richtig-meldung">
               <p>Richtige Antwort: {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}</p>
             </div>
           )}

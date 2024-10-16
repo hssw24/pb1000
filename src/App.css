@@ -1,38 +1,77 @@
-.App {
+/* Allgemeines Layout */
+.app-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* Responsive Layout */
+@media (max-width: 600px) {
+  .app-container {
+    padding: 10px;
+  }
+  
+  .zahl-feld {
+    width: 60px;
+    font-size: 18px;
+  }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .submit-button, .start-button {
+    font-size: 18px;
+    padding: 10px 20px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Styling der Aufgabeneingaben */
+.aufgabe {
+  margin-bottom: 20px;
+}
+
+.eingaben-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.zahl-feld {
+  font-size: 16px;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* Buttons */
+.submit-button, .start-button {
+  background-color: #007bff;
   color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.submit-button:hover, .start-button:hover {
+  background-color: #0056b3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Fehlermeldung und richtige Antwort */
+.fehler-meldung {
+  color: red;
+  margin-top: 10px;
+}
+
+.richtig-meldung {
+  color: green;
+  margin-top: 10px;
+}
+
+/* Statistik */
+.statistik {
+  margin-top: 20px;
+}
+
+.statistik ul {
+  list-style-type: none;
+  padding: 0;
 }
