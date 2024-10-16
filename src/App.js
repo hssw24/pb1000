@@ -128,7 +128,7 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <h1>Grundschul-App: Addition</h1>
+      <h1>3c-App: Addition</h1>
       {aufgaben.length === 0 ? (
         <button onClick={starteNeueRunde} className="start-button">Neue Runde starten</button>
       ) : (
@@ -142,7 +142,7 @@ const App = () => {
             <>
               {letzteAufgabe.correctResult !== letzteAufgabe.userResult ? (
                 <div className="fehler-meldung">
-                  <p>Falsches Ergebnis! {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}, Ihre Eingabe: {letzteAufgabe.userResult}</p>
+                  <p>Falsches Ergebnis! {letzteAufgabe.num1} + {letzteAufgabe.num2} = {letzteAufgabe.correctResult}, Deine Eingabe: {letzteAufgabe.userResult}</p>
                 </div>
               ) : (
                 <div className="richtig-meldung">
