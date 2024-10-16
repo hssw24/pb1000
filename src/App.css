@@ -13,7 +13,7 @@
   }
   
   .zahl-feld {
-    width: 60px;
+    width: 100%;
     font-size: 18px;
   }
 
@@ -28,17 +28,22 @@
   margin-bottom: 20px;
 }
 
-.eingaben-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+.eingabe-tabelle {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+}
+
+.eingabe-tabelle th, .eingabe-tabelle td {
+  text-align: center;
+  padding: 10px;
+  width: 25%;
 }
 
 .zahl-feld {
   font-size: 16px;
-  padding: 5px;
-  margin: 5px;
+  padding: 10px;
+  width: 100%;
 }
 
 /* Buttons */

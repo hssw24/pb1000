@@ -20,28 +20,40 @@ const AufgabeKomponente = ({ num1, num2, onAnswerSubmit }) => {
   return (
     <div className="aufgabe">
       <h2>{num1} + {num2}</h2>
-      <div className="eingaben-container">
-        <label>Tausender:
-          <select value={eingabe.tausender} onChange={(e) => handleChange(e, 'tausender')} className="zahl-feld">
-            {options}
-          </select>
-        </label>
-        <label>Hunderter:
-          <select value={eingabe.hunderter} onChange={(e) => handleChange(e, 'hunderter')} className="zahl-feld">
-            {options}
-          </select>
-        </label>
-        <label>Zehner:
-          <select value={eingabe.zehner} onChange={(e) => handleChange(e, 'zehner')} className="zahl-feld">
-            {options}
-          </select>
-        </label>
-        <label>Einer:
-          <select value={eingabe.einer} onChange={(e) => handleChange(e, 'einer')} className="zahl-feld">
-            {options}
-          </select>
-        </label>
-      </div>
+      <table className="eingabe-tabelle">
+        <thead>
+          <tr>
+            <th>T</th>
+            <th>H</th>
+            <th>Z</th>
+            <th>E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <select value={eingabe.tausender} onChange={(e) => handleChange(e, 'tausender')} className="zahl-feld">
+                {options}
+              </select>
+            </td>
+            <td>
+              <select value={eingabe.hunderter} onChange={(e) => handleChange(e, 'hunderter')} className="zahl-feld">
+                {options}
+              </select>
+            </td>
+            <td>
+              <select value={eingabe.zehner} onChange={(e) => handleChange(e, 'zehner')} className="zahl-feld">
+                {options}
+              </select>
+            </td>
+            <td>
+              <select value={eingabe.einer} onChange={(e) => handleChange(e, 'einer')} className="zahl-feld">
+                {options}
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <button onClick={handleSubmit} className="submit-button">Überprüfen</button>
     </div>
   );
